@@ -58,12 +58,12 @@ def get_weather(province, city):
     # 天气
     weather = weatherinfo["weather"]
     #当前温度
-    now = weatherinfo["now"]
+    tempnn = weatherinfo["tempnn"]
     # 最高气温
     temp = weatherinfo["temp"]
     # 最低气温
     tempn = weatherinfo["tempn"]
-    return weather, temp, tempn, now
+    return weather, temp, tempn, tempnn
 
 
 def get_birthday(birthday, year, today):
@@ -113,7 +113,7 @@ def get_ciba():
     return note_ch, note_en
 
 
-def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature, now_temperature, note_ch, note_en):
+def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature, tempnn_temperature, note_ch, note_en):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     year = localtime().tm_year
@@ -155,8 +155,8 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
                 "value": min_temperature,
                 "color": get_color()
             },
-            "now_temperature": {
-                "value": now_temperature,
+            "tempnn_temperature": {
+                "value": tempnn_temperature,
                 "color": get_color()
             },
             "max_temperature": {
@@ -223,10 +223,10 @@ if __name__ == "__main__":
     users = config["user"]
     # 传入省份和市获取天气信息
     province, city = config["province"], config["city"]
-    weather, max_temperature, min_temperature, now_temperature = get_weather(province, city)
+    weather, max_temperature, min_temperature, tempnn_temperature = get_weather(province, city)
     # 获取词霸每日金句
     note_ch, note_en = get_ciba()
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, city, weather, max_temperature, min_temperature, note_ch, now_temperature, note_en)
+        send_message(user, accessToken, city, weather, max_temperature, tempnn_temperature, note_ch, now_temperature, note_en)
     os.system("pause")
