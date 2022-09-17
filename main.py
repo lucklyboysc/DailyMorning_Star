@@ -57,11 +57,13 @@ def get_weather(province, city):
     weatherinfo = response_json["weatherinfo"]
     # 天气
     weather = weatherinfo["weather"]
+    #当前温度
+    now = weatherinfo["now"]
     # 最高气温
     temp = weatherinfo["temp"]
     # 最低气温
     tempn = weatherinfo["tempn"]
-    return weather, temp, tempn
+    return weather, temp, tempn, now
 
 
 def get_birthday(birthday, year, today):
@@ -151,6 +153,10 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
             },
             "min_temperature": {
                 "value": min_temperature,
+                "color": get_color()
+            },
+            "now_temperature": {
+                "value": now_temperature,
                 "color": get_color()
             },
             "max_temperature": {
