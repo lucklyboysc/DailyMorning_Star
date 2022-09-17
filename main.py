@@ -223,7 +223,7 @@ if __name__ == "__main__":
     users = config["user"]
     # 传入省份和市获取天气信息
     province, city = config["province"], config["city"]
-    weather, max_temperature, min_temperature, now_temperature, = get_weather(province, city)
+    weather, max_temperature, min_temperature, now_temperature = get_weather(province, city)
     # 获取词霸每日金句
     note_ch, note_en = get_ciba()
     # 公众号推送消息
